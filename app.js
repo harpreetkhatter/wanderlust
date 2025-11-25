@@ -23,11 +23,17 @@ const User = require("./models/user.js");
 
 const dbUrl = process.env.ATLASDB_URL;
 
+if (!dbUrl) {
+    console.error("ATLASDB_URL environment variable is not set!");
+    process.exit(1);
+}
+
 main().then(()=>{
     console.log("connected to db");
 })
 .catch((err) => {
-    console.log(err);
+    console.error("MongoDB connection error:", err);
+    process.exit(1);
 });
 
 async function main() {
